@@ -36,4 +36,4 @@ def rainfall_predict():
     return jsonify({"prediction":prediction[0]})
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=5052, debug=True)
+    app.run(host='localhost', port=5050, debug=False)
