@@ -13,9 +13,7 @@ model = joblib.load("../Milestone_3/model_updated.joblib")
 def return_prediction(input_data):
 
     # format input_data here so that you can pass it to model.predict()
-    formatted_data = [input_data["data"]]
-    print(formatted_data)
-    print(dir(model))
+    formatted_data = [[float(x) for x in input_data["data"].split(",")]]
 
     return model.predict(formatted_data)
 
@@ -30,10 +28,12 @@ def index():
 
 # 4. define a new route which will accept POST requests and return model predictions
 @app.route('/predict', methods=['POST'])
-def rainfall_prediction():
+def rainfall_predict():
+    
     content = request.json  # this extracts the JSON content we sent
     prediction = return_prediction(content)
-    # results = content #{"name": 23}  return whatever data you wish, it can be just the prediction
-    # print(content)
-                     # or it can be the prediction plus the input data, it's up to you
-    return jsonify(prediction)
+
+    return jsonify({"prediction":prediction[0]})
+
+if __name__ == "__main__":
+    app.run(host='localhost', port=5052, debug=True)
